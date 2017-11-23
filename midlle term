@@ -1,0 +1,210 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace AgileAss
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //this  clear all textboxs
+            textBox1.Text = "";
+            textBox2.Text = "";
+            textBox3.Text = "";
+            textBox4.Text = "";
+            textBox5.Text = "";
+            textBox6.Text = "";
+            textBox8.Text = "";
+            textBox7.Text = "";
+            txtcoun.Text = "";
+            txtbirth.Text = "";
+            txtage.Text = "";
+
+        }
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+              /* This is Enumeration
+              Enumeration is also named (an enumeration or an enum) provides an efficient way to
+               define a set of named integal constants that may be assigned to avarible*/
+            country coun; 
+            coun = country.somalia;
+            txtcoun.Text = coun.ToString();
+            abstraction ab = new abstraction();
+            ab.age = Convert.ToInt32(txtage.Text);
+            txtbirth.Text = ab.calculdateofbirth().ToString();
+
+            try
+            {
+                if (comboBox1.SelectedIndex == 0)
+                {
+                    AgileAss.FullTime emp = new FullTime();
+                    emp.EmployeeID = Convert.ToInt32(textBox1.Text);
+                    emp.EmployeName = textBox2.Text;
+                    emp.Salary = Convert.ToDouble(textBox3.Text);
+                    textBox7.Text = emp.CalculateIncom().ToString();
+                    days d = new days();
+                    d.daysofwork = Convert.ToInt32(textBox5.Text);
+                    textBox8.Text = d.Workeddays().ToString();
+                    
+
+                   // MessageBox.Show(emp.CalculateIncom().ToString());
+                }
+                else
+                {
+                    AgileAss.PartTime emp = new PartTime();
+                    emp.EmployeeID = Convert.ToInt32(textBox1.Text);
+                    emp.EmployeName = textBox2.Text;
+                    emp.Salary = Convert.ToDouble(textBox3.Text);
+                    textBox7.Text = emp.CalculateIncom().ToString();
+                   // MessageBox.Show(emp.CalculateIncom().ToString());
+                    days d = new days();
+                    d.daysofwork = Convert.ToInt32(textBox5.Text);
+                    textBox8.Text = d.Workeddays().ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Inheritance", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+        enum country
+        {
+            somalia, bangladesh, canada, qatar
+        }
+        namespace AgileAss
+{
+    /*this class is heritance of emplee class
+    heritance is where an object or class is based another object*/
+   public class FullTime:Employee
+    {
+        //these are variables of this class.
+        public double CalculateIncom()
+        {
+            return (Salary * 12);
+        }
+        namespace AgileAss
+{
+    /*this class is heritance of emplee class
+        heritance is where an object or class is based another object*/
+    public class PartTime: Employee
+    {
+        public double CalculateIncom()
+        {
+            return (Salary * 6);
+        }
+
+    }
+}
+  /*This is polymorphism class.
+    polymorphism means to process object differently based their data type 
+    polymorphism is feature that allows one interface to be used for general class action*/
+    public class Employee
+    {
+        // These are variables of this class.
+        private int _employeeid = 0;
+        private string _employeename = string.Empty;
+        private double _salary;
+
+        public int EmployeeID
+        {
+            get { return _employeeid; }
+            set
+            {
+                if (value.Equals(DBNull.Value))
+                {
+                    throw new Exception("Employee ID cannot be empty");
+                }
+                else
+                {
+                    _employeeid = value;
+                }
+            }
+        }
+        public string EmployeName
+        {
+            get { return _employeename; }
+            set { _employeename = value; }
+        }
+        public double Salary
+        {
+            get { return _salary; }
+            set { _salary = value; }
+        }
+
+    }
+}
+/* Encapsulation code.
+    encapsulation is an object that binds together the data and function 
+    that manipulate the data.
+    eccapsulation provides to keep the data and code safe from external interference*/
+   public class days
+    {
+       //these are variables of this class
+        private int _daysofwork;
+        private int _absentdays;
+
+        public int daysofwork
+        {
+            get { return _daysofwork; }
+            set { _daysofwork = value; }
+        }
+        public int absentdays
+        {
+            get { return _absentdays; }
+            set { _absentdays = value; }
+        }
+        public double Workeddays()
+        {
+            return (7 - daysofwork);
+        }
+
+    }
+}
+
+/* Abstracation code.
+     Abstraction is process where you show only relevent data of an object from the user 
+      */
+    public class abstraction
+    {
+        //these are variables of this class.
+        private double _dateofbirth;
+        private double _age;
+
+        public double dateofbirth
+        {
+            get { return _dateofbirth; }
+            set { _dateofbirth = value; }
+        }
+        public double age
+        {
+            get { return _age; }
+            set { _age = value; }
+        }
+        public double calculdateofbirth()
+        {
+            return (age - 2017);
+        }
+
+
+    }
+}
